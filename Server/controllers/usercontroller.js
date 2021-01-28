@@ -21,6 +21,7 @@ router.post("/create", function (req,res){
     .catch(err => res.status(500).json({error:err}))
 });
 
+//USER LOGIN//
 router.post("/login", function (req,res){
     User.findOne({
         where: { 
