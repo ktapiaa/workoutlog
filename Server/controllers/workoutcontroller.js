@@ -50,26 +50,28 @@ router.get('/:description', function (req, res){
 
 
 //UPDATE ENTRY//
-// router.put("update/:resultId", validateSession, function (req, res){
-//     const updateLogEntry ={
-//         description: req.body.log.description,
-//         definition: req.body.log.definition,
-//         result: req.body.log.result,
-//     };
-//     const query = {where:{id: req.params.resultId, owner_id: req.user.id}};
+router.put("/update/:resultId", validateSession, function (req, res){
+   console.log(req.body);
+    const updateLogEntry ={
+        description: req.body.log.description,
+        definition: req.body.log.definition,
+        result: req.body.log.result,
+    }; 
+    
+    const query = {where:{id: req.params.resultId, owner_id: req.user.id}};
 
-//     Log.update(updateLogEntry, query)
-//     .then((log)=> res.status(200).json(log))
-//     .catch((err)=> res.status(500).json({error:err}));
-// })
+    Log.update(updateLogEntry, query)
+    .then((log)=> res.status(200).json(log))
+    .catch((err)=> res.status(500).json({error:err}));
+})
 
 //DELETE ENTRY//
-// router.delete("delete/:id", validateSession, function (req,res){
-//     const query = {where: {id: req.params.id, owner_id: req.user.id}};
+router.delete("/delete/:id", validateSession, function (req,res){
+    const query = {where: {id: req.params.id, owner_id: req.user.id}};
 
-//     Log.destroy(query)
-//     .then(() => res.status(200).json({message: "Log entry removed!"}))
-//     .catch((err)=> res.status(500).json({error:err}));
-// })
+    Log.destroy(query)
+    .then(() => res.status(200).json({message: "Log entry removed!"}))
+    .catch((err)=> res.status(500).json({error:err}));
+})
 
 module.exports = router;

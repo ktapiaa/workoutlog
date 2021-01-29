@@ -10,18 +10,15 @@ console.log('token -->', token);
         jwt.verify(token, process.env.JWT_SECRET, (err, decodeToken) => {
             console.log('decodeToken -->', decodeToken);
             if (!err && decodeToken){
-                User.findOne({
-                    where:{ 
-                        id: decodeToken.id}
-                })
+                User.findOne({ where:{ id: decodeToken.id}, raw:true })
                 .then(user =>{
                     console.log('user-->', user)
                     if (!user) throw err;
-                    console.log('req-->', req);
+                    // console.log('req-->', req);
                     req.user = user;
-                    return next();
+                    next();
                 })
-                .catch(err => next(err));
+                .catch(err => console.log(err));
             } else {
                 req.errors = err;
                 return res.status(500).send('Not Authorized');
